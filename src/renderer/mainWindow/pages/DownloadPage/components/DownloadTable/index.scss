@@ -1,0 +1,190 @@
+// ============================================================================
+// DownloadTable — 下载管理统一列表
+//
+// 列：状态图标 | 标题 | 歌手 | 专辑 | 大小 | 时间 | 状态 | 操作
+// 行有三种来源（下载任务 / 已下载 / 云端上传记录），样式共用一套。
+// 默认按时间倒序（最新在最上面），点「时间」列头切换方向。
+// 选中只有整行高亮（和 SongTable 一样，没有勾选框列）。
+// ============================================================================
+
+.p-download__table {
+    width: 100%;
+    table-layout: fixed;
+    text-align: left;
+    font-size: var(--text-body-size);
+    border-collapse: collapse;
+}
+
+.p-download__header-row {
+    border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.p-download__header-cell {
+    font-weight: var(--font-weight-normal);
+    color: var(--color-text-secondary);
+    padding: var(--space-3) var(--space-4);
+
+    // 全部列都用百分比：table-layout: fixed 下混用 px 会把标题列挤没
+    // 状态图标列 = 3 个 16px 图标 + 2 个 8px 间隔 + 左右 padding
+    &--state {
+        width: 11%;
+        padding-right: 0;
+    }
+
+    &:not([class*='--']) {
+        width: 22%;
+    }
+
+    &--artist {
+        width: 12%;
+    }
+
+    &--album {
+        width: 10%;
+    }
+
+    &--size {
+        width: 9%;
+    }
+
+    &--time {
+        width: 12%;
+    }
+
+    &--status {
+        width: 16%;
+    }
+
+    &--actions {
+        width: 8%;
+        text-align: right;
+    }
+}
+
+// ── 时间列头：点一下切换「最新在前 / 最早在前」 ──
+.p-download__sort-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: 0;
+    border: none;
+    background: none;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+
+    &:hover {
+        color: var(--color-text-primary);
+    }
+}
+
+// ── 行 ──
+.p-download__row {
+    transition: background-color var(--duration-normal) var(--ease-standard);
+
+    &:hover {
+        background-color: var(--color-fill-subtle);
+    }
+
+    // 多选选中：和 SongTable 用同一个色（surface-raised），全应用一套
+    &.is-selected {
+        background-color: var(--color-bg-surface-raised);
+    }
+}
+
+// ── 状态图标组（收藏 / 下载 / 云端，和歌曲列表状态列同一套尺寸 16px + 8px 间隔） ──
+.p-download__state-icons {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    line-height: normal;
+}
+
+.p-download__cell {
+    padding: var(--space-3) var(--space-4);
+    color: var(--color-text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &--state {
+        padding: 0 var(--space-2);
+        overflow: visible;
+    }
+
+    &--title {
+        color: var(--color-text-primary);
+    }
+
+    &--size {
+        font-size: var(--text-caption-size);
+        font-variant-numeric: tabular-nums;
+    }
+
+    &--time {
+        font-size: var(--text-caption-size);
+        font-variant-numeric: tabular-nums;
+    }
+
+    &--actions {
+        overflow: visible;
+        text-overflow: clip;
+        text-align: right;
+    }
+}
+
+// ── 标题单元格 ──
+.p-download__title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-width: 0;
+}
+
+.p-download__kind-icon {
+    flex-shrink: 0;
+    color: var(--color-text-brand);
+}
+
+.p-download__song-title {
+    font-weight: var(--font-weight-medium);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+// ── 状态文本 ──
+.p-download__status-text {
+    font-size: var(--text-overline-size);
+
+    // 「下载失败」是个按钮：点一下就清除失败状态（和列表上的失败图标同效）
+    &--clickable {
+        border: none;
+        background: none;
+        padding: 0;
+        font-family: inherit;
+        cursor: pointer;
+        text-decoration: underline dotted;
+        text-underline-offset: 2px;
+
+        &:hover {
+            color: var(--color-text-primary);
+        }
+    }
+
+    &--pending {
+        color: var(--color-text-secondary);
+    }
+
+    &--error {
+        color: var(--color-status-danger-text);
+    }
+
+    &--done {
+        color: var(--color-status-success-text);
+    }
+
+    &--uploaded {
+        color: var(--color-text-brand);
+    }
+}

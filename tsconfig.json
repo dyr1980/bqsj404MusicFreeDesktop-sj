@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "jsx": "react-jsx",
+        "target": "ES2021",
+        "allowJs": true,
+        "module": "commonjs",
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "noImplicitAny": true,
+        "sourceMap": true,
+        "baseUrl": ".",
+        "outDir": "dist",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "experimentalDecorators": true,
+        "paths": {
+            "*": ["node_modules/*"],
+            "@common/*": ["src/common/*"],
+            "@main/*": ["src/main/*"],
+            "@renderer/*": ["src/renderer/*"],
+            "@preload/*": ["src/preload/*"],
+            "@assets/*": ["src/assets/*"],
+            "@res/*": ["res/*"],
+            "@appTypes/*": ["src/types/*"],
+            "@infra/*": ["src/infra/*"]
+        }
+    },
+    "include": ["src/**/*"]
+}

@@ -1,0 +1,291 @@
+// ============================================================================
+// LyricManagerModal — 歌词管理弹窗样式
+//
+// 结构：顶部搜索 + 筛选 → 统一列表（歌曲行 + 未匹配歌词，按来源分组）→ 查看态
+//
+// 列表用 Virtuoso 虚拟滚动（几千首歌也只挂可视区那几十行），所以行高必须由
+// 行自己的 padding 撑出来，不要在列表上写死行高。
+//
+// 行是三列栅格：`歌名/歌手 | 状态图标 | 操作按钮`。
+// 状态列的左右两列都是 `minmax(0, 1fr)`（等宽），所以三个状态图标**永远在行的正中间**，
+// 不会被右侧图标数量变化推着走。
+//
+// 查看态复用同一个弹窗（列表换成只读歌词面板），避免弹窗套弹窗。
+// ============================================================================
+
+.b-lyric-manager {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    min-height: 0;
+
+    // ── 搜索 + 筛选 ──
+    &__toolbar {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        flex-shrink: 0;
+    }
+
+    &__search {
+        flex: 1;
+
+        .input {
+            width: 100%;
+        }
+    }
+
+    &__filters {
+        display: inline-flex;
+        gap: var(--space-1);
+        flex-shrink: 0;
+    }
+
+    &__filter {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-1);
+        padding: var(--space-1) var(--space-3);
+        border-radius: var(--radius-pill, 999px);
+        border: 1px solid var(--color-border-subtle);
+        background-color: transparent;
+        color: var(--color-text-secondary);
+        font: inherit;
+        font-size: var(--text-caption-size);
+        cursor: pointer;
+        transition:
+            background-color var(--duration-fast) var(--ease-standard),
+            color var(--duration-fast) var(--ease-standard);
+
+        &:hover {
+            background-color: var(--color-fill-subtle);
+            color: var(--color-text-primary);
+        }
+
+        &.is-active {
+            background-color: var(--color-fill-brand-muted);
+            border-color: var(--color-fill-brand);
+            color: var(--color-text-brand);
+        }
+    }
+
+    &__filter-count {
+        color: var(--color-text-muted);
+        font-variant-numeric: tabular-nums;
+    }
+
+    &__filter.is-active &__filter-count {
+        color: inherit;
+        opacity: 0.8;
+    }
+
+    // 未匹配模式的说明（为什么这些歌词在这儿）
+    &__hint {
+        flex-shrink: 0;
+        margin-top: calc(-1 * var(--space-1));
+        color: var(--color-text-muted);
+        font-size: var(--text-caption-size);
+    }
+
+    // ── 列表（虚拟滚动容器：高度必须确定） ──
+    &__list {
+        height: 420px;
+        margin: 0 calc(-1 * var(--space-6));
+        padding: 0 var(--space-2);
+
+        &--empty {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 360px;
+            margin: 0;
+            padding: 0;
+        }
+    }
+
+    &__scroller {
+        height: 100%;
+    }
+
+    // ── 行：歌名/歌手 | 状态 | 操作（左右两列等宽 → 状态列居中且固定） ──
+    &__item {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 88px minmax(0, 1fr);
+        align-items: center;
+        gap: var(--space-3);
+        padding: var(--space-2) var(--space-4);
+        border-radius: var(--radius-control);
+        user-select: none;
+        transition: background-color var(--duration-fast) var(--ease-standard);
+
+        &:hover {
+            background-color: var(--color-fill-subtle);
+        }
+
+        &.is-selected {
+            background-color: var(--color-bg-surface-raised);
+        }
+    }
+
+    &__item-main {
+        min-width: 0;
+        display: flex;
+        align-items: baseline;
+        gap: var(--space-2);
+    }
+
+    &__song {
+        color: var(--color-text-primary);
+        font-size: var(--text-body-size);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__artist {
+        flex-shrink: 0;
+        color: var(--color-text-secondary);
+        font-size: var(--text-caption-size);
+    }
+
+    // ── 状态列：本地歌词 / 云端歌词 / 已关联（有＝亮，无＝压暗） ──
+    &__status {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-3);
+    }
+
+    &__status-slot {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-status-success-text);
+        opacity: 0.25;
+        cursor: default;
+
+        &.is-on {
+            opacity: 1;
+        }
+    }
+
+    // ── 操作按钮 ──
+    &__actions {
+        display: inline-flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: var(--space-0-5);
+    }
+
+    &__action {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: var(--icon-md);
+        height: var(--icon-md);
+        padding: 0;
+        border: none;
+        border-radius: var(--radius-pill);
+        background: none;
+        color: var(--color-text-secondary);
+        cursor: pointer;
+        transition:
+            background-color var(--duration-fast) var(--ease-standard),
+            color var(--duration-fast) var(--ease-standard);
+
+        &:hover:not(:disabled) {
+            background-color: var(--color-fill-subtle-hover);
+            color: var(--color-text-primary);
+        }
+
+        &:disabled {
+            opacity: var(--opacity-disabled);
+            cursor: default;
+        }
+
+        &--danger:hover:not(:disabled) {
+            background-color: var(--color-status-danger-bg);
+            color: var(--color-status-danger-text);
+        }
+    }
+
+    // ── 查看态 ──
+    &__viewer-toolbar {
+        flex-shrink: 0;
+        margin-left: calc(-1 * var(--space-2));
+    }
+
+    &__viewer {
+        height: 420px;
+        margin: 0 calc(-1 * var(--space-6));
+        padding: 0 var(--space-6);
+    }
+
+    &__lyric-text {
+        margin: 0;
+        font-family: var(--font-family-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+        font-size: var(--text-caption-size);
+        line-height: 1.7;
+        color: var(--color-text-secondary);
+        white-space: pre-wrap;
+        word-break: break-word;
+    }
+
+    // ── 未匹配歌词的分组标题（和歌曲行同一个列表里，按来源分开） ──
+    &__group {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        padding: var(--space-3) var(--space-4) var(--space-1);
+        color: var(--color-text-secondary);
+        font-size: var(--text-caption-size);
+        font-weight: var(--font-weight-medium);
+        user-select: none;
+    }
+
+    &__group-icon {
+        display: inline-flex;
+        align-items: center;
+        color: var(--color-text-muted);
+    }
+
+    &__group-count {
+        color: var(--color-text-muted);
+        font-variant-numeric: tabular-nums;
+    }
+
+    // ── 未匹配歌词的行 ──
+    &__orphan {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        padding: var(--space-2) var(--space-4);
+        border-radius: var(--radius-control);
+        user-select: none;
+
+        &:hover {
+            background-color: var(--color-fill-subtle);
+        }
+
+        &.is-selected {
+            background-color: var(--color-bg-surface-raised);
+        }
+    }
+
+    &__orphan-icon {
+        display: inline-flex;
+        align-items: center;
+        flex-shrink: 0;
+        color: var(--color-text-secondary);
+    }
+
+    &__orphan-name {
+        flex: 1;
+        min-width: 0;
+        color: var(--color-text-secondary);
+        font-size: var(--text-caption-size);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}

@@ -1,0 +1,112 @@
+// ============================================================================
+// ToggleSourceMoreModal — 批量换源弹窗样式
+// ============================================================================
+
+.b-toggle-source-more-modal {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+
+    // ── 本地 / 云端：并排两列（和单曲换源弹窗一致） ──
+    &__sources {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-2);
+    }
+
+    &__source {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        min-width: 0;
+        padding: var(--space-2) var(--space-3);
+        border: 1px solid var(--color-border-subtle);
+        border-radius: var(--radius-control);
+        background-color: transparent;
+        color: var(--color-text-primary);
+        font: inherit;
+        text-align: left;
+        cursor: pointer;
+        transition:
+            background-color var(--duration-fast) var(--ease-standard),
+            border-color var(--duration-fast) var(--ease-standard);
+
+        &:hover:not(:disabled) {
+            background-color: var(--color-fill-subtle);
+        }
+
+        &.is-selected {
+            background-color: var(--color-fill-brand-muted);
+            border-color: var(--color-fill-brand);
+        }
+
+        &:disabled {
+            opacity: var(--opacity-muted);
+            cursor: not-allowed;
+        }
+    }
+
+    &__source-icon {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        color: var(--color-text-secondary);
+    }
+
+    &__source-info {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    &__source-label {
+        font-size: var(--text-body-size);
+        line-height: 1.2;
+    }
+
+    &__source-hint {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: var(--text-caption-size);
+        color: var(--color-text-muted);
+    }
+
+    // ── 目标插件 ──
+    &__row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-3);
+        padding: var(--space-2) var(--space-3);
+        border: 1px solid var(--color-border-subtle);
+        border-radius: var(--radius-control);
+        transition:
+            background-color var(--duration-fast) var(--ease-standard),
+            border-color var(--duration-fast) var(--ease-standard);
+
+        &.is-selected {
+            background-color: var(--color-fill-brand-muted);
+            border-color: var(--color-fill-brand);
+        }
+    }
+
+    &__label {
+        flex-shrink: 0;
+        font-size: var(--text-body-size);
+        color: var(--color-text-secondary);
+    }
+
+    &__hint {
+        font-size: var(--text-caption-size);
+        color: var(--color-text-muted);
+        line-height: var(--text-caption-leading, 1.5);
+    }
+
+    &__warn {
+        font-size: var(--text-caption-size);
+        color: var(--color-status-warn-text);
+    }
+}

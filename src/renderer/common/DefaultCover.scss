@@ -1,0 +1,24 @@
+// ============================================================================
+// DefaultCover — 默认封面（墨笔高音谱号）
+// ============================================================================
+//
+// 谱号素材只提供形状（alpha mask），颜色由 currentColor 给：
+// 挂载点通常是 .artwork__fallback / 迷你窗口封面容器，
+// 它们的 color 是 --color-text-muted（浅色主题会覆盖成深色），所以三套主题都合。
+
+.default-cover {
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    // 用主题色“染色”
+    background-color: currentColor;
+
+    // mask 的其余参数（图片本身在 tsx 里给，交给 webpack 解析资源路径）
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+}

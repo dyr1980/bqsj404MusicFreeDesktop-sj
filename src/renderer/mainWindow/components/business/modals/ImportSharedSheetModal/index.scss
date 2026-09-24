@@ -1,0 +1,45 @@
+// ============================================================================
+// ImportSharedSheetModal — 导入分享的歌单
+// ============================================================================
+
+.sheet-share-import {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+
+    &__actions {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+
+        // 按钮铺满一行，形成清晰的三个入口
+        button {
+            width: 100%;
+            justify-content: flex-start;
+        }
+    }
+
+    &__pending {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        font-size: var(--text-caption-size);
+        color: var(--color-text-secondary);
+    }
+
+    &__error {
+        font-size: var(--text-caption-size);
+        color: var(--color-status-danger-text);
+        word-break: break-all;
+    }
+}
+
+.spin {
+    animation: sheet-share-spin 0.9s linear infinite;
+}
+
+@keyframes sheet-share-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

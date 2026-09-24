@@ -1,0 +1,108 @@
+// ============================================================================
+// HeaderFilter — 表头筛选（Excel 风格：点列头的小漏斗选值）
+// ============================================================================
+
+.header-filter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    margin-left: 6px;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: var(--radius-xs);
+    background: transparent;
+    color: var(--color-text-muted);
+    vertical-align: middle;
+    cursor: pointer;
+    transition:
+        background-color var(--duration-fast) var(--ease-standard),
+        color var(--duration-fast) var(--ease-standard),
+        border-color var(--duration-fast) var(--ease-standard);
+
+    &:hover {
+        background: var(--color-fill-subtle-hover);
+        color: var(--color-text-primary);
+    }
+
+    // 有筛选生效 → 高亮，一眼看出这列在过滤
+    &.is-active {
+        background: var(--color-fill-brand-muted);
+        border-color: var(--color-fill-brand);
+        color: var(--color-text-brand);
+    }
+}
+
+.header-filter__dropdown {
+    position: fixed;
+    z-index: var(--z-popover);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 4px;
+    overflow-y: auto;
+    background: var(--color-bg-popover);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-lg);
+    animation: header-filter-in var(--duration-fast) var(--ease-popup) forwards;
+}
+
+.header-filter__option {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    width: 100%;
+    padding: 6px 8px;
+    border: none;
+    border-radius: var(--radius-xs);
+    background: none;
+    color: var(--color-text-primary);
+    font-family: inherit;
+    font-size: var(--text-caption-size);
+    text-align: left;
+    cursor: pointer;
+
+    &:hover {
+        background: var(--color-fill-subtle-hover);
+    }
+
+    &.is-selected {
+        background: var(--color-fill-brand-muted);
+        color: var(--color-text-brand);
+    }
+}
+
+.header-filter__check {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    flex-shrink: 0;
+}
+
+.header-filter__label {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.header-filter__count {
+    font-size: var(--text-overline-size);
+    color: var(--color-text-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+@keyframes header-filter-in {
+    from {
+        opacity: 0;
+        transform: scale(0.96) translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}

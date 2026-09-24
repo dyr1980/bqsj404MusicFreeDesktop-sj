@@ -1,0 +1,61 @@
+// ============================================================================
+// DownloadPage — 下载管理页面样式（页面布局）
+// ============================================================================
+
+.p-download {
+    padding-top: var(--space-4);
+
+    // ── 页头 ──
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: var(--space-5);
+    }
+
+    // 页头右侧按钮组（歌词管理 + 打开下载文件夹）
+    &__header-actions {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+    }
+
+    &__title {
+        font-size: var(--text-title-size);
+        font-weight: var(--font-weight-bold);
+        line-height: var(--text-title-leading);
+        color: var(--color-text-primary);
+    }
+
+    // ── 工具栏（只放搜索；状态筛选在表头） ──
+    &__toolbar {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-3);
+        margin-bottom: var(--space-4);
+    }
+
+    &__search {
+        max-width: 320px;
+    }
+
+    // ── 列表区 ──
+    &__body {
+        min-height: 0;
+    }
+
+    // ── 空态 ──
+    &__empty {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-3);
+        padding: var(--space-10) 0;
+        color: var(--color-text-muted);
+    }
+
+    &__empty-text {
+        font-size: var(--text-body-size);
+    }
+}

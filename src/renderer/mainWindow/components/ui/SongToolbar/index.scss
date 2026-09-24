@@ -1,0 +1,59 @@
+// ============================================================================
+// SongToolbar — 组合组件样式
+// ============================================================================
+//
+// 设计稿还原（像素级）：
+//   容器: flex, justify-between, items-center, py-12, mb-4
+//   左侧: flex, gap-8
+//   右侧: SearchInput width 280px
+//
+// 窄窗口下的布局规则（以前这里是「左按钮 + 右搜索框，两边都不许压缩」，
+// 歌单页 4 个按钮时总宽 475 + 280 = 755 > 容器 750：
+// 间距被挤成 0、搜索框还溢出容器 5px，看起来就像搜索框贴死在按钮上）：
+//   1. 按钮组与搜索框之间用 gap 固定最小间距，不再只靠 space-between 撑
+//   2. 空间不足时**先压缩搜索框**（280 → 200），放不下才整块换行到第二行
+//   3. 按钮组自身允许换行，极窄窗口下不会被裁掉
+//
+
+.song-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3) var(--space-4);
+    padding: 12px 0;
+    margin-bottom: 4px;
+
+    // ── 左侧操作区 ──
+    &__left {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+    }
+
+    // ── 右侧搜索 ──
+    // flex-basis 取 200（= min-width）而不是 280：换行判定按这个值算，
+    // 于是「差一点放得下」时是压缩搜索框，而不是直接掉到第二行。
+    &__right {
+        flex: 1 1 200px;
+        max-width: 280px;
+        min-width: 200px;
+        display: flex;
+        justify-content: flex-end;
+        // 换行到第二行时也贴右边（space-between 只管首行）
+        margin-left: auto;
+    }
+
+    &__search {
+        width: 100%;
+    }
+
+    // ── 禁用状态 ──
+    // 内置 Button/Input 通过 disabled prop 原生禁用；
+    // 插槽按钮（children）无法传 prop，统一用 CSS 禁用。
+    &.is-disabled &__left > .btn:not(.is-disabled):not(.always-enabled) {
+        pointer-events: none;
+        opacity: 0.4;
+    }
+}

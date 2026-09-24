@@ -1,0 +1,74 @@
+// ============================================================================
+// SourceIndicator — 播放栏里的「音源」小胶囊
+// ============================================================================
+
+.l-source-indicator {
+    // 可收缩：插件名很长时优先让它变窄 + 省略号，而不是把旁边的按钮/时间挤变形
+    flex: 0 1 auto;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    max-width: 120px;
+    height: 22px;
+    padding: 0 var(--space-2);
+    border-radius: 999px;
+
+    color: var(--color-text-muted);
+    font-size: var(--text-caption-size);
+    line-height: 1;
+
+    // 平时几乎不占视觉重量：hover 才显底色
+    background-color: transparent;
+    transition: background-color var(--duration-fast) var(--ease-standard);
+
+    &:hover {
+        background-color: var(--color-fill-subtle);
+    }
+
+    // 换源中：显眼一点，并带上停止按钮
+    &.is-switching {
+        max-width: 220px;
+        color: var(--color-text-primary);
+        background-color: var(--color-fill-subtle);
+    }
+
+    &__text {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__spin {
+        flex-shrink: 0;
+        animation: source-indicator-spin 1s linear infinite;
+    }
+
+    // 停止换源：精简成一个方块小按钮
+    &__stop {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        padding: 0;
+        border: none;
+        border-radius: var(--radius-control);
+        background-color: var(--color-fill-neutral);
+        color: var(--color-text-primary);
+        cursor: pointer;
+        transition: background-color var(--duration-fast) var(--ease-standard);
+
+        &:hover {
+            background-color: var(--color-fill-neutral-hover);
+        }
+    }
+}
+
+@keyframes source-indicator-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

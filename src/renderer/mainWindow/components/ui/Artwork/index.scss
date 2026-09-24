@@ -1,0 +1,65 @@
+// ============================================================================
+// Artwork — 原子组件样式
+// ============================================================================
+
+.artwork {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background-color: var(--color-bg-placeholder);
+    box-shadow: var(--shadow-md);
+    flex-shrink: 0;
+
+    // 默认封面（墨笔谱号）：素材只提供墨迹形状，不该再有方块底和阴影，
+    // 否则暗色主题下会看到一块灰底/一圈黑晕、跟主题背景割裂。
+    // 这里写成 .artwork.artwork--default-cover（两个类）而不是单类：
+    // 使用方会给封面单独加阴影（如 .l-player-bar__cover 的 --shadow-lg），
+    // 单类权重打不过它们（同权重、后写的赢）。
+    &.artwork--default-cover {
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    &--sm {
+        border-radius: var(--radius-control);
+    }
+
+    &--md {
+        border-radius: var(--radius-card);
+    }
+
+    &--lg {
+        border-radius: var(--radius-artwork);
+    }
+
+    &__img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    &__fallback {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-text-muted);
+    }
+
+    &__overlay {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--color-bg-overlay);
+        opacity: 0;
+        transition: opacity var(--duration-normal) var(--ease-standard);
+    }
+
+    &:hover .artwork__overlay {
+        opacity: 1;
+    }
+}

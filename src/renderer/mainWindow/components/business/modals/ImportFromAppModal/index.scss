@@ -1,0 +1,164 @@
+// ============================================================================
+// ImportFromAppModal — 从其他软件导入歌单
+// ============================================================================
+
+// 标题区与正文的空隙收紧（只影响这个弹窗，不动 Modal 的通用间距）
+.import-from-app-modal {
+    .modal__header {
+        padding-top: 12px;
+        padding-bottom: 6px;
+    }
+
+    .modal__subtitle {
+        margin-top: 0;
+    }
+
+    .modal__body {
+        padding-top: 8px;
+    }
+}
+
+.import-from-app {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+
+    // 副标题里的前半句：加粗 + 提亮，作为整句的重点
+    &__desc-lead {
+        font-weight: 600;
+        color: var(--color-text-primary);
+    }
+
+    // ── 各平台获取链接的综合介绍 ──
+    &__guide {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+        padding: var(--space-3) var(--space-4);
+        border-radius: var(--radius-card);
+        background-color: var(--color-fill-subtle);
+    }
+
+    &__guide-title {
+        font-size: var(--text-caption-size);
+        font-weight: 600;
+        color: var(--color-text-secondary);
+        margin-bottom: var(--space-1);
+        // 左对齐（跟内容列同一视觉基线）
+        text-align: left;
+    }
+
+    &__guide-row {
+        display: flex;
+        gap: var(--space-3);
+        // 标签在竖直方向相对多行内容居中
+        align-items: center;
+        font-size: var(--text-caption-size);
+        line-height: 1.6;
+    }
+
+    &__guide-platform {
+        // 固定列宽：标签长短不一（手机 App / 网页 / 电脑端），
+        // 固定住才能让右侧多行内容纵向对齐；横向居中，宽度尽量小
+        flex: 0 0 76px;
+        white-space: nowrap;
+        text-align: center;
+        color: var(--color-text-primary);
+        font-weight: 600;
+    }
+
+    &__guide-text {
+        // 同一标签下可以有多行（每个 App 一行）
+        display: flex;
+        flex-direction: column;
+        color: var(--color-text-muted);
+    }
+
+    // ── 探测结果 ──
+    &__results {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+    }
+
+    &__results-title {
+        font-size: var(--font-size-label);
+        color: var(--color-text-secondary);
+    }
+
+    &__result {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        padding: var(--space-2) var(--space-3);
+        border-radius: var(--radius-control);
+        border: 1px solid var(--color-border-subtle);
+        background-color: transparent;
+        text-align: left;
+        transition: background-color var(--duration-fast) var(--ease-standard);
+
+        &:disabled {
+            cursor: default;
+            opacity: 0.55;
+        }
+
+        &:not(:disabled):hover {
+            background-color: var(--color-fill-subtle-hover);
+        }
+
+        &.is-picked {
+            border-color: var(--color-border-brand);
+            background-color: var(--color-fill-brand-muted);
+        }
+
+        .is-ok {
+            color: var(--color-text-brand);
+            flex-shrink: 0;
+        }
+
+        .is-fail {
+            color: var(--color-text-disabled);
+            flex-shrink: 0;
+        }
+    }
+
+    &__result-name {
+        flex: 1;
+        min-width: 0;
+        font-size: var(--font-size-body);
+        color: var(--color-text-primary);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__result-meta {
+        flex-shrink: 0;
+        font-size: var(--font-size-label);
+        color: var(--color-text-muted);
+    }
+
+    &__pending {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        font-size: var(--font-size-label);
+        color: var(--color-text-muted);
+
+        .spin {
+            animation: spin 1s linear infinite;
+        }
+    }
+
+    &__empty {
+        padding: var(--space-3) 0;
+        font-size: var(--font-size-label);
+        color: var(--color-text-muted);
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

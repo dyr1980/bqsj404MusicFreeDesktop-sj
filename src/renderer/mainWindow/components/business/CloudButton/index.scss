@@ -1,0 +1,101 @@
+// ============================================================================
+// CloudButton — 业务组件样式
+// ============================================================================
+//
+// 与 DownloadButton 同一套尺寸/交互规范：
+//   容器: inline-flex, items-center, justify-center, rounded-pill, flex: 0 0 auto
+//   默认: bg transparent, color text-secondary；hover 变亮
+//   上传中: color text-brand，图标旋转，禁用
+//   云端已有: color status-success-text，禁用（表示云端有这份文件）
+//   本地没有文件: 照常可点（主进程取音源边下边传），tooltip 会说明
+//   尺寸: sm(--icon-sm) md(--icon-md) lg(--icon-lg) xl(--icon-xl)
+//
+
+.cloud-btn {
+    // ── 重置 button 默认样式 ──
+    border: none;
+    background: none;
+    padding: 0;
+
+    // ── 布局 ──
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    // 同 DownloadButton：定宽图标按钮不许被长文本挤扁
+    flex: 0 0 auto;
+
+    // ── 默认外观 ──
+    color: var(--color-text-secondary);
+
+    // ── 过渡 ──
+    transition:
+        background-color var(--duration-fast) var(--ease-standard),
+        color var(--duration-fast) var(--ease-standard),
+        opacity var(--duration-instant) var(--ease-standard);
+
+    // ── hover ──
+    &:hover:not(.is-uploaded):not(.is-uploading) {
+        color: var(--color-text-primary);
+    }
+
+    // ── :active ──
+    &:active:not(.is-uploaded):not(.is-uploading) {
+        opacity: var(--opacity-pressed);
+    }
+
+    // ── 上传中 ──
+    &.is-uploading {
+        color: var(--color-text-brand);
+        cursor: default;
+
+        > svg {
+            animation: cloud-btn-spin 1s linear infinite;
+        }
+    }
+
+    // ── 云端已有 ──
+    &.is-uploaded {
+        color: var(--color-status-success-text);
+        opacity: var(--opacity-disabled);
+        cursor: default;
+    }
+
+    // ── :focus-visible ──
+    &:focus-visible {
+        outline: var(--focus-ring-width) solid var(--focus-ring-color);
+        outline-offset: var(--focus-ring-offset);
+    }
+
+    // ── 尺寸 ──
+    &--sm {
+        width: var(--icon-sm);
+        height: var(--icon-sm);
+    }
+
+    &--md {
+        width: var(--icon-md);
+        height: var(--icon-md);
+    }
+
+    &--lg {
+        width: var(--icon-lg);
+        height: var(--icon-lg);
+    }
+
+    &--xl {
+        width: var(--icon-xl);
+        height: var(--icon-xl);
+    }
+}
+
+@keyframes cloud-btn-spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}

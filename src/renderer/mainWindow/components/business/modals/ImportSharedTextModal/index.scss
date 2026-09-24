@@ -1,0 +1,37 @@
+// ============================================================================
+// ImportSharedTextModal — 粘贴分享文本导入
+// ============================================================================
+
+.sheet-share-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+
+    &__input {
+        width: 100%;
+        box-sizing: border-box;
+        height: 200px;
+        resize: vertical;
+        padding: var(--space-3);
+        border: 1px solid var(--color-border-default);
+        border-radius: var(--radius-control);
+        background: var(--color-bg-surface);
+        color: var(--color-text-primary);
+        font-family: inherit;
+        font-size: var(--text-caption-size);
+        line-height: 1.6;
+        // 注意：这里**不能**写 `outline: none` —— 焦点环已改用 outline 实现，
+        // 元素级（0,1,0）的 outline: none 会反过来压掉全局的 `:focus-visible` 焦点环。
+        // 输入框的软提示仍由下面的 `&:focus` 边框变色负责。
+
+        &:focus {
+            border-color: var(--color-border-focus);
+        }
+    }
+
+    &__error {
+        font-size: var(--text-caption-size);
+        color: var(--color-status-danger-text);
+        word-break: break-all;
+    }
+}

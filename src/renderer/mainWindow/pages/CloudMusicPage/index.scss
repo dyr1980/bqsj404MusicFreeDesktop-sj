@@ -1,0 +1,93 @@
+// ============================================================================
+// CloudMusicPage — 云盘音乐页面样式
+// ============================================================================
+
+.p-cloud-music {
+    padding-top: var(--space-4);
+
+    // ── 页头 ──
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-3);
+        margin-bottom: var(--space-4);
+    }
+
+    &__title-row {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        min-width: 0;
+    }
+
+    &__title {
+        font-size: var(--text-title-size);
+        font-weight: var(--font-weight-bold);
+        line-height: var(--text-title-leading);
+        color: var(--color-text-primary);
+        white-space: nowrap;
+    }
+
+    &__count {
+        font-size: var(--text-caption-size);
+        color: var(--color-text-muted);
+        font-variant-numeric: tabular-nums;
+    }
+
+    &__uploading {
+        font-size: var(--text-caption-size);
+        color: var(--color-text-brand);
+        font-variant-numeric: tabular-nums;
+    }
+
+    &__spin {
+        color: var(--color-text-brand);
+        animation: p-cloud-music-spin 1.2s linear infinite;
+    }
+
+    &__header-actions {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        min-width: 0;
+    }
+
+    // 目录文本（跟在标题后）：可长可短，长了就省略，别把标题行撑开
+    &__dir {
+        min-width: 0;
+        max-width: 260px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: var(--text-caption-size);
+        color: var(--color-text-muted);
+    }
+
+    // ── 工具栏（搜索） ──
+    &__toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-bottom: var(--space-4);
+    }
+
+    &__search {
+        width: 260px;
+        max-width: 100%;
+    }
+
+    // ── 列表区 ──
+    &__body {
+        min-height: 0;
+    }
+}
+
+@keyframes p-cloud-music-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

@@ -1,0 +1,84 @@
+// ============================================================================
+// BackupRestoreSelectModal — 恢复弹窗样式
+// ============================================================================
+
+.backup-restore-select {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+
+    &__summary {
+        font-size: var(--text-caption-size);
+        color: var(--color-text-muted);
+    }
+
+    &__hint {
+        font-size: var(--text-caption-size);
+        color: var(--color-text-muted);
+    }
+
+    // 「同时恢复歌词」：开关 + 说明
+    &__option {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+    }
+
+    &__option-text {
+        font-size: var(--text-caption-size);
+        color: var(--color-text-secondary);
+    }
+
+    &__option-desc {
+        color: var(--color-text-muted);
+    }
+
+    // 恢复方式：标签 + 单选同一行
+    &__inline {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+    }
+
+    &__inline-label {
+        flex-shrink: 0;
+        font-size: var(--text-caption-size);
+        color: var(--color-text-secondary);
+    }
+
+    &__empty {
+        padding: var(--space-4) 0;
+        text-align: center;
+        font-size: var(--text-caption-size);
+        color: var(--color-text-muted);
+    }
+
+    // 搜索框 + 全选按钮
+    &__toolbar {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+    }
+
+    &__search {
+        flex: 1;
+        min-width: 0;
+    }
+
+    &__list {
+        max-height: 320px;
+        overflow-y: auto;
+        padding: var(--space-2);
+        border: 1px solid var(--color-border-subtle);
+        border-radius: var(--radius-control);
+    }
+
+    // CheckboxGroup 默认是横向 flex，这里改成纵向列表
+    &__checkbox {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-2);
+        width: 100%;
+    }
+}

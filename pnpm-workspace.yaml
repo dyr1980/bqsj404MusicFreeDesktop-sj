@@ -1,0 +1,42 @@
+# pnpm 11 的构建脚本白名单（原 package.json 里的 pnpm.onlyBuiltDependencies 在 v11 已废弃）
+#
+# 数据库已改用 **Electron 内置的 node:sqlite**，不再依赖 better-sqlite3 ——
+# 原先针对它的两处特判（allowBuilds 里设 false、以及 @electron/node-gyp 的 ABI/VS2026 绕过）随之不再需要。
+# 目前项目里唯一的原生模块是 sharp：它是 **N-API 预编译包**（安装时不编译），
+# 这里保留白名单只是为了允许它的安装脚本执行。
+#
+# 关于 electron：Electron 42 起已移除 postinstall（二进制改为**首次运行时按需下载**），
+# 这一项对 42+ 实际不生效；保留是为了兼容将来有人临时降级到 ≤41。
+#
+# pnpm 11 不再从 .npmrc 读取非认证类设置（.npmrc 里的 node-linker=hoisted 会被忽略），
+# 而 electron-forge 的系统检查要求 `pnpm config get node-linker` == "hoisted"，所以写在这里。
+nodeLinker: hoisted
+
+allowBuilds:
+  '@parcel/watcher': true
+  electron: true
+  sharp: true
+  unrs-resolver: true
+
+overrides:
+  # ── 为什么替换掉 extract-zip（Electron 44 打包必需）──
+  # extract-zip@2.0.1（其内部 yauzl 2.10）解压 **Electron 44 的发行 zip 会永久挂起**：
+  # 实测该 promise 既不 resolve 也不 reject，事件循环空掉后进程直接退出 ——
+  # 表现为 `npm run package` 退出码 0 但 out/ 里没有产物（forge 日志停在 "Finalizing package"）。
+  # 排除过的方案：@electron/packager 20.x 虽已弃用 extract-zip，但它与 forge 7.11.1 的 API 不兼容
+  # （实测 `TypeError: done is not a function`，packager 20 移除了回调式 API）。
+  # 现行方案：换成 Electron 官方维护的 @electron-internal/extract-zip（原生实现，自述为 extract-zip 的
+  # drop-in replacement）。实测解压同一个 zip 只需 2.7 秒；其 CJS 互操作形态
+  # （__esModule=true 且 default 为函数）正好匹配 packager 的 `__importDefault(require('extract-zip'))` 调用方式。
+  # 回退方式：删掉这一行（回到 extract-zip@2.0.1，但 Electron 44 将无法打包）。
+  'extract-zip': npm:@electron-internal/extract-zip@^1.0.5
+
+  # ── 可删除项 ──
+  # @electron/rebuild@3.7.2（forge 7.11 的传递依赖）用的 @electron/node-gyp 基于 node-gyp 10.2，
+  # 认不出 VS 2026；项目已无需要按 ABI 编译的原生模块，这条 override 理论上可以删，
+  # 保守做法是先保留一个版本周期，确认 npm start / npm run package 全程无 gyp 动作后再删。
+  '@electron/node-gyp': npm:node-gyp@^12.4.0
+
+# pnpm 的"新版本冷却期"策略会拦住刚发布的版本；Electron 44.4.5 由 pnpm 在安装时自动加到这里。
+minimumReleaseAgeExclude:
+  - electron@44.4.5
