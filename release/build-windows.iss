@@ -5,11 +5,12 @@
 #ifndef MyAppVersion
 #define MyAppVersion "0.0.0-alpha.0"
 #endif
-#define MyAppPublisher "maotoumao"
-#define MyAppURL "https://musicfree.catcat.work"
+#define MyAppPublisher "不甚解"
+#define MyAppURL "https://github.com/bqsj404/MusicFreeDesktop-sj"
 #define MyAppExeName "MusicFree.exe"
 #ifndef MyAppId
-#define MyAppId
+; sj 变体专用 AppId：与原版安装包区分开，保证升级/卸载只认这一份
+#define MyAppId "8F3C2E54-7B6D-4A21-9E5C-1D4B7A9F2C63"
 #endif
 
 
@@ -30,7 +31,7 @@ DisableProgramGroupPage=yes
 ;PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
 OutputDir=..\out
-OutputBaseFilename=MusicFreeSetup
+OutputBaseFilename=MusicFree-{#MyAppVersion}-Setup
 SetupIconFile=..\res\logo.ico
 Compression=lzma
 SolidCompression=yes

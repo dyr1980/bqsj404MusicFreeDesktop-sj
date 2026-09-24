@@ -57,7 +57,7 @@ MusicFree's core capabilities are driven by plugins. The plugin protocol is comp
 
 ### Plugin Repository
 
-- **Example plugins**: TBD
+- **Example plugin**: 链接解析_v1.0.2.js — [view source](https://github.com/bqsj404/MusicFreePlugins-sj/blob/main/plugins/链接解析_v1.0.2.js) | [raw URL](https://raw.githubusercontent.com/bqsj404/MusicFreePlugins-sj/main/plugins/链接解析_v1.0.2.js)
 - **Documentation**: TBD
 
 <!-- TODO: your own plugin repository and plugin development docs -->

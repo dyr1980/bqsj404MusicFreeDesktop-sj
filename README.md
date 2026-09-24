@@ -57,7 +57,7 @@ MusicFree 的核心能力由插件驱动。插件协议与 MusicFree 安卓版�
 
 ### 插件仓库
 
-- **示例插件**：待补充
+- **示例插件**：链接解析_v1.0.2.js —— [网页看代码](https://github.com/bqsj404/MusicFreePlugins-sj/blob/main/plugins/链接解析_v1.0.2.js) ｜ [raw 直接装](https://raw.githubusercontent.com/bqsj404/MusicFreePlugins-sj/main/plugins/链接解析_v1.0.2.js)
 - **开发文档**：待补充
 
 <!-- 待补充：你自己的插件仓库地址与插件开发文档地址 -->
