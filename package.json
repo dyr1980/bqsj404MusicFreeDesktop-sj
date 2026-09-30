@@ -26,13 +26,13 @@
         "electron",
         "plugin"
     ],
-    "homepage": "https://github.com/bqsj404/MusicFreeDesktop-sj",
+    "homepage": "https://github.com/dyr1980/bqsj404MusicFreeDesktop-sj",
     "repository": {
         "type": "git",
-        "url": "https://github.com/bqsj404/MusicFreeDesktop-sj.git"
+        "url": "https://github.com/dyr1980/bqsj404MusicFreeDesktop-sj.git"
     },
     "bugs": {
-        "url": "https://github.com/bqsj404/MusicFreeDesktop-sj/issues"
+        "url": "https://github.com/dyr1980/bqsj404MusicFreeDesktop-sj/issues"
     },
     "author": {
         "name": "小橙子"
