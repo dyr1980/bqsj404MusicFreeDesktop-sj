@@ -1,7 +1,7 @@
 {
     "name": "musicfree-desktop",
     "productName": "MusicFree",
-    "version": "1.0.0-sj",
+    "version": "1.0.0",
     "description": "一个插件化的音乐播放器",
     "main": ".webpack/main",
     "private": true,
@@ -35,7 +35,7 @@
         "url": "https://github.com/bqsj404/MusicFreeDesktop-sj/issues"
     },
     "author": {
-        "name": "不甚解"
+        "name": "小橙子"
     },
     "license": "AGPL-3.0-only",
     "devDependencies": {
