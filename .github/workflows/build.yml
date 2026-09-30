@@ -38,13 +38,13 @@ jobs:
                   $version = node -p "require('./package.json').version"
                   echo "VERSION=$version" >> $env:GITHUB_ENV
             - run: pnpm run package
-            - uses: maotoumao/inno-setup-action-cli@main
+            - uses: dyr1980/inno-setup-action-cli@main
               with:
                   filepath: ./release/build-windows.iss
                   variables: /DMyAppVersion=${{ env.VERSION }} /DMyAppId=${{ secrets.MYAPPID }}
             - name: Rename setup file
               run: |
-                  Rename-Item -Path "./out/MusicFreeSetup.exe" -NewName "MusicFree-${{ env.VERSION }}-win32-x64-setup.exe"
+                  Rename-Item -Path "./out/MusicFreeDesktop-${{ env.VERSION }}-Setup.exe" -NewName "MusicFree-${{ env.VERSION }}-win32-x64-setup.exe"
             - name: Generate portable
               run: |
                   New-Item -ItemType Directory -Path "./out/MusicFree-win32-x64/portable" -Force
@@ -89,13 +89,13 @@ jobs:
             - name: Install Electron 22
               run: pnpm add electron@22 --save-dev
             - run: pnpm run package
-            - uses: maotoumao/inno-setup-action-cli@main
+            - uses: dyr1980/inno-setup-action-cli@main
               with:
                   filepath: ./release/build-windows.iss
                   variables: /DMyAppVersion=${{ env.VERSION }} /DMyAppId=${{ secrets.MYAPPID }}
             - name: Rename setup file
               run: |
-                  Rename-Item -Path "./out/MusicFreeSetup.exe" -NewName "MusicFree-${{ env.VERSION }}-win32-x64-legacy-setup.exe"
+                  Rename-Item -Path "./out/MusicFreeDesktop-${{ env.VERSION }}-Setup.exe" -NewName "MusicFree-${{ env.VERSION }}-win32-x64-legacy-setup.exe"
             - name: Generate portable
               run: |
                   New-Item -ItemType Directory -Path "./out/MusicFree-win32-x64/portable" -Force
