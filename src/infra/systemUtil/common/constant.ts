@@ -46,15 +46,18 @@ export const UPSTREAM_UPDATE_SOURCES = [
 ];
 
 /**
- * **本变体（fork）** 的版本检查源 —— 仓库地址还没定，先留空。
+ * **本变体（fork）** 的版本检查源。
  *
- * 之后要做「检查我的更新」时，需要两步：
- *   1. 把本变体的 version.json 地址填进这个数组（例如
- *      `https://raw.githubusercontent.com/<你的账号>/<仓库>/master/release/version.json`）；
- *   2. 在 `src/renderer/mainWindow/pages/SettingPage/sections/AboutSection.tsx` 里
- *      把 `FORK_UPDATE_SOURCE` 也填上，并去掉那个按钮的 disabled。
+ * 指向你自己的仓库 `release/version.json`。要启用「检查我的更新」，
+ * 需要确保：
+ *   1. 仓库 `release/version.json` 存在且格式正确；
+ *   2. `checkUpdate` 的实现里会优先读取这个数组；
+ *   3. `AboutSection.tsx` 里的按钮逻辑走的是本变体的更新检查。
  */
-export const FORK_UPDATE_SOURCES: string[] = [];
+export const FORK_UPDATE_SOURCES: string[] = [
+    'https://raw.githubusercontent.com/dyr1980/bqsj404MusicFreeDesktop-sj/main/release/version.json',
+    'https://cdn.jsdelivr.net/gh/dyr1980/bqsj404MusicFreeDesktop-sj@main/release/version.json',
+];
 
 /** contextBridge key */
 export const CONTEXT_BRIDGE_KEY = '@infra/system-util';
