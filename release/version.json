@@ -1,9 +1,10 @@
 {
   "version": "1.0.1",
   "changeLog": [
-    "1. 【修复】修复了一些可能导致白屏的问题"
+    "1. 【修改】基于 MusicFree 修改，维护者：小橙子",
+    "2. 【优化】更新检查源指向本仓库"
   ],
   "download": [
-    "https://r0rvr854dd1.feishu.cn/drive/folder/IrVEfD67KlWZGkdqwjecLHFNnBb?from=from_copylink"
+    "https://github.com/dyr1980/bqsj404MusicFreeDesktop-sj/releases"
   ]
 }
