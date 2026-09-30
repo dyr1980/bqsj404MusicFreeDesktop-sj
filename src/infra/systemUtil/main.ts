@@ -14,7 +14,7 @@ import { compare } from 'compare-versions';
 import type { IWindowManager } from '@appTypes/main/windowManager';
 import type { IUpdateInfo, IPopupNativeMenuParams } from '@appTypes/infra/systemUtil';
 import appSync from '@infra/appSync/main';
-import { IPC, UPSTREAM_UPDATE_SOURCES } from './common/constant';
+import { IPC, UPSTREAM_UPDATE_SOURCES, FORK_UPDATE_SOURCES } from './common/constant';
 
 class SystemUtil {
     private windowManager!: IWindowManager;
@@ -219,16 +219,21 @@ class SystemUtil {
     // ─── 内部方法 ───
 
     /**
-     * 检查**原版（上游）**更新。
+     * 检查更新。
      *
-     * 关于页把它放在「原版信息」一栏里，按钮文案是「获取原版更新」——
-     * 本变体的更新源还没定（见 common/constant.ts 的 FORK_UPDATE_SOURCES）。
+     * 优先检查本变体的更新源（FORK_UPDATE_SOURCES），如果为空或检查失败，
+     * 再回退到原版（上游）的更新源（UPSTREAM_UPDATE_SOURCES）。
      */
     private async checkUpdate(): Promise<IUpdateInfo> {
         const currentVersion = app.getVersion();
         const updateInfo: IUpdateInfo = { version: currentVersion };
 
-        for (const source of UPSTREAM_UPDATE_SOURCES) {
+        // 优先检查本变体的更新源
+        const sources = FORK_UPDATE_SOURCES.length > 0
+            ? FORK_UPDATE_SOURCES
+            : UPSTREAM_UPDATE_SOURCES;
+
+        for (const source of sources) {
             try {
                 const { data: rawInfo } = await axios.get(source, { timeout: 10000 });
                 if (rawInfo?.version && compare(rawInfo.version, currentVersion, '>')) {
