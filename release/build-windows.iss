@@ -5,8 +5,8 @@
 #ifndef MyAppVersion
 #define MyAppVersion "0.0.0-alpha.0"
 #endif
-#define MyAppPublisher "不甚解"
-#define MyAppURL "https://github.com/bqsj404/MusicFreeDesktop-sj"
+#define MyAppPublisher "小橙子"
+#define MyAppURL "https://github.com/dyr1980/bqsj404MusicFreeDesktop-sj"
 #define MyAppExeName "MusicFree.exe"
 #ifndef MyAppId
 ; sj 变体专用 AppId：与原版安装包区分开，保证升级/卸载只认这一份
@@ -55,4 +55,3 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
-
